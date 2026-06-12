@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
     :root {
-      --bg-main: #030712;
-      --bg-panel: #0b1528;
-      --bg-header: #070d19;
-      --accent-cyan: #018fa9;
-      --border-color: rgba(2, 169, 201, 0.15);
+      --bg-main: #020617;
+      --bg-panel: #090f1c;
+      --bg-header: #050a14;
+      --accent-cyan: #02a9c9;
+      --border-color: rgba(2, 169, 201, 0.2);
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'Courier New', ui-monospace, monospace;
     }
@@ -36,7 +36,7 @@
       border-radius: 14px;
       overflow: hidden;
       background: var(--bg-panel);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
     }
     .nav-header {
       background: var(--bg-header);
@@ -66,6 +66,7 @@
       font-family: var(--font-mono);
       color: #e2f1ff;
       font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     button {
       background: rgba(255, 255, 255, 0.04);
@@ -85,6 +86,7 @@
       background: rgba(2, 169, 201, 0.2);
       border-color: var(--accent-cyan);
       color: #fff;
+      box-shadow: 0 0 10px rgba(2, 169, 201, 0.3);
     }
     input[type="text"], select, textarea {
       background: rgba(255, 255, 255, 0.04);
@@ -104,19 +106,22 @@
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
     }
 
-    /* ══ PANNEAU DROIT AGRANDI & FOND BLANC LUMINEUX ═══════════════════════ */
+    /* ══ PANNEAU DROIT PROFESSIONNEL LUXE FOND BLANC ═══════════════════════ */
     .instrument-panel {
-      width: 340px; /* Plus large */
+      width: 340px;
       flex-shrink: 0;
-      background: #ffffff; /* Fond blanc complet */
+      background: #fdfdfd;
       border-left: 1px solid #e2e8f0;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
       box-sizing: border-box;
+      box-shadow: inset 10px 0 20px -10px rgba(0,0,0,0.05);
     }
     .card-instrument {
-      padding: 28px 20px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 26px 20px;
       border-bottom: 1px solid #f1f5f9;
       display: flex;
       flex-direction: column;
@@ -125,19 +130,20 @@
     }
     .instrument-title {
       font-size: 11px;
-      color: #64748b; /* Couleur lisible sur blanc */
+      color: #64748b;
       letter-spacing: 0.15em;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 700;
       text-transform: uppercase;
     }
     .instrument-value {
-      font-size: 48px; /* Plus gros */
+      font-size: 46px;
       font-weight: 800;
       font-family: var(--font-mono);
-      color: #0f172a; /* Texte sombre intense */
+      color: #0f172a;
       line-height: 1;
       letter-spacing: -0.02em;
+      text-shadow: 1px 1px 2px rgba(15,23,42,0.08); /* Ombrage discret de texte sur blanc */
     }
     .instrument-sub {
       font-size: 12px;
@@ -155,16 +161,32 @@
       gap: 12px;
       margin-bottom: 10px;
       font-size: 12px;
-      color: #334155; /* Plus contrasté */
+      color: #334155;
     }
     .legend-color {
       width: 10px;
       height: 10px;
       border-radius: 50%;
       flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    
+    /* Intégration signature sur la carte */
+    .map-copyright-overlay {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      z-index: 999;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.5);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,0.9);
+      pointer-events: none;
+      text-transform: uppercase;
     }
 
-    /* 📱 ACCORDANCE SMARTPHONE */
+    /* 📱 RESPONSIVE SMARTPHONE OPTIMISÉ POUR GARDER LES RADARS EN VERTICAL */
     @media (max-width: 768px) {
       body { padding: 4px; }
       #app { border-radius: 8px; }
@@ -176,9 +198,11 @@
       #u-time { font-size: 16px !important; }
       
       .main-body { flex-direction: column !important; }
+      
+      /* Le panneau droit passe sous la carte verticalement */
       .instrument-panel {
         width: 100% !important;
-        height: 120px;
+        height: 140px; /* Un peu plus haut pour caler les canvas */
         flex-direction: row !important;
         overflow: hidden;
         border-left: none !important;
@@ -186,25 +210,38 @@
       }
       .card-instrument {
         flex: 1;
-        padding: 12px 6px !important;
+        padding: 10px 4px !important;
         border-bottom: none !important;
         border-right: 1px solid #f1f5f9;
         justify-content: center;
       }
       .instrument-title { font-size: 9px; margin-bottom: 2px; }
-      .instrument-value { font-size: 28px !important; }
+      .instrument-value { font-size: 26px !important; }
       .instrument-sub { font-size: 10px; margin-top: 2px; }
       
-      .legend-box, #cps, #gge, .panel-footer { display: none !important; }
-      #ctrl { bottom: 8px !important; left: 8px !important; right: 8px !important; padding: 8px !important; }
+      /* Redimensionnement à la volée des canvas instruments sur mobile */
+      #cps {
+        width: 130px !important;
+        height: 65px !important;
+        margin-top: 4px !important;
+      }
+      #gge {
+        width: 130px !important;
+        height: 18px !important;
+        margin-top: 6px !important;
+      }
+      
+      .legend-box, .panel-footer { display: none !important; }
+      #ctrl { bottom: 155px !important; left: 8px !important; right: 8px !important; padding: 8px !important; }
       #u-coord, #u-dist, .sub-divider { display: none !important; }
       #dpanel { width: calc(100% - 24px) !important; }
+      .map-copyright-overlay { bottom: 155px; font-size: 9px; }
     }
   </style>
 </head>
 <body>
 
-<h2 class="sr-only">Console AIS Professionnelle de Suivi de Navires</h2>
+<h2 class="sr-only">Suivi de Navires</h2>
 
 <div id="app">
   <div class="nav-header">
@@ -213,14 +250,14 @@
     <div class="hud-box" style="min-width: 240px; background: rgba(2, 169, 201, 0.02)">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
         <span id="vessel-led" class="status-led" style="color: #64748b; background-color: currentColor;"></span>
-        <div id="h-name" style="font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.05em;">FRANCIS'S MAGNIFICENT FISHING BOAT</div>
+        <div id="h-name" style="font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.05em; text-shadow: 0 0 6px rgba(2,169,201,0.4);">FRANCIS'S MAGNIFICENT FISHING BOAT</div>
       </div>
-      <div id="h-sub" style="font-size: 10px; color: #7293b8; font-family: var(--font-mono);">MMSI 227856000 · NAVIRE DE PÊCHE</div>
+      <div id="h-sub" style="font-size: 10px; color: #7293b8; font-family: var(--font-mono);">MMSI 123456789 · NAVIRE DE PÊCHE</div>
     </div>
 
     <div class="hud-box">
       <div class="hud-label">AIS TIME</div>
-      <div id="u-time" class="hud-value" style="font-size: 22px; color: #02a9c9;">02:06</div>
+      <div id="u-time" class="hud-value" style="font-size: 22px; color: #02a9c9; text-shadow: 0 0 8px rgba(2,169,201,0.5);">02:06</div>
     </div>
     
     <div class="hud-box">
@@ -245,6 +282,8 @@
   <div class="main-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden">
     <div style="flex: 1; position: relative; min-height: 0">
       <div id="mbox" style="position: absolute; inset: 0; background: #eaedf0"></div>
+
+      <div class="map-copyright-overlay">Réalisation © François Dosset</div>
 
       <div id="dpanel" style="position: absolute; top: 12px; left: 12px; z-index: 1100; width: 370px; display: none; background: rgba(7,13,25,0.96); border: 1px solid #02a9c9; border-radius: 10px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5)">
         <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.07)">
@@ -325,7 +364,8 @@
       </div>
       
       <div class="panel-footer" style="margin-top: auto; border-top: 1px solid #f1f5f9; padding: 12px; text-align: center;">
-        <div style="font-size: 9px; color: #94a3b8; font-family: var(--font-mono); letter-spacing: 0.05em;">TRACKING CORE v7.5 MOBILE-READY</div>
+        <div style="font-size: 10px; color: #475569; font-weight: 600; margin-bottom: 2px;">Réalisation © François Dosset</div>
+        <div style="font-size: 8px; color: #94a3b8; font-family: var(--font-mono); letter-spacing: 0.05em;">TRACKING CORE v8.0 MOBILE-READY</div>
       </div>
     </div>
   </div>
@@ -4135,13 +4175,12 @@ function distNM(a,b,c,d){const R=3440.065,p1=a*Math.PI/180,p2=c*Math.PI/180,dp=(
 function cumDist(n){let d=0;for(let i=1;i<=n&&i<PINGS.length;i++)d+=distNM(PINGS[i-1].lat,PINGS[i-1].lon,PINGS[i].lat,PINGS[i].lon);return d;}
 function fmtCoord(lat,lon){return Math.abs(lat).toFixed(3)+"°"+(lat>=0?"N":"S")+" · "+Math.abs(lon).toFixed(3)+"°"+(lon<=0?"O":"E");}
 
-// Vitesses modifiées avec ajout de l'index 0 (0.05x base) pour un déplacement très lent
 let SPDS=[0.00015, 0.0006, 0.0024, 0.012, 0.024];
 function updateSpeeds(){ 
   const N=PINGS.length; 
   const totSecs=Math.min(60,Math.max(20,N*0.5)); 
   const base=1/(totSecs*60); 
-  SPDS=[base*0.05, base*0.2, base, base*2, base*4]; // 0.05x injecté au début
+  SPDS=[base*0.05, base*0.2, base, base*2, base*4];
 }
 
 // ── LEAFLET SETUP ────────────────────────────────────────────────────────────
@@ -4187,7 +4226,7 @@ let vm=null;
 function initVessel(){if(vm)map.removeLayer(vm);const p=PINGS[0];vm=L.marker([p.lat,p.lon],{icon:L.divIcon({html:`<div id="vr" style="transform:rotate(${p.hdg}deg);transform-origin:12px 24px;width:24px;height:48px">${FISHING_BOAT_SVG}</div>`,iconSize:[24,48],iconAnchor:[12,24],className:''}),zIndexOffset:2000}).addTo(map);}
 function updVessel(lat,lon,hdg){if(!vm)return;vm.setLatLng([lat,lon]);const el=vm.getElement();if(el&&el.firstElementChild)el.firstElementChild.style.transform=`rotate(${hdg}deg)`;}
 
-// ── SILLAGE PERSISTANT (ESTOMPEMENT MODIFIÉ POUR SUPPORTER PLUS DE TRACÉS) ───
+// ── SILLAGE PERSISTANT REHAUSSÉ ──────────────────────────────────────────────
 const segRnd=L.canvas({padding:.5});
 let trajSegs=[],lastSegIdx=-1,showTJ=true;
 
@@ -4207,19 +4246,17 @@ function updSegs(currentIdx){
       trajSegs[i].setStyle({opacity: 0});
     } else {
       const gap = currentIdx - i;
-      // Seuils d'estompement poussés pour conserver le tracé beaucoup plus longtemps intact
-      if(gap <= 30)         trajSegs[i].setStyle({opacity: 0.95, weight: 4.5}); // Reste intact plus longtemps
+      if(gap <= 30)         trajSegs[i].setStyle({opacity: 0.95, weight: 4.5});
       else if(gap <= 80)    trajSegs[i].setStyle({opacity: 0.75, weight: 4.0});
       else if(gap <= 150)   trajSegs[i].setStyle({opacity: 0.50, weight: 3.5});
-      else                  trajSegs[i].setStyle({opacity: 0.25, weight: 2.5}); // Fond de tracé persistant
+      else                  trajSegs[i].setStyle({opacity: 0.25, weight: 2.5});
     }
   }
 }
 function toggleTraj(){showTJ=!showTJ;if(!showTJ){trajSegs.forEach(s=>s.setStyle({opacity:0}));}else{updSegs(lastSegIdx);}document.getElementById('traj-btn').style.opacity=showTJ?'1':'0.35';}
 
-// ── COMPASS & GAUGE (Mises aux couleurs sombres lisibles sur fond blanc) ─────
+// ── DRAW RADAR COMPASS & GAUGE (FONCTIONNEL ORDINATEUR & SMARTPHONE) ─────────
 function drawCompass(ctx,hdg){
-  if(window.innerWidth <= 768) return;
   const W=ctx.canvas.width,H=ctx.canvas.height,cx=W/2,cy=H/2,r=Math.min(W,H)/2-2;
   ctx.clearRect(0,0,W,H);
   
@@ -4240,7 +4277,6 @@ function drawCompass(ctx,hdg){
 }
 
 function drawGauge(ctx,spd){
-  if(window.innerWidth <= 768) return;
   const W=ctx.canvas.width,H=ctx.canvas.height; ctx.clearRect(0,0,W,H);
   const MAX=12,pct=Math.min(spd/MAX,1),pad=10,y=H/2+2,bw=W-pad*2;
   
@@ -4264,6 +4300,7 @@ function render(p){
   
   if(following&&playing){const c=map.getCenter();if(map.distance([vlat,vlon],[c.lat,c.lng])>350)map.panTo([vlat,vlon],{animate:true,duration:0.4});}
   
+  // Rendu adaptatif forcé (calculé pour ordi & mobile)
   drawCompass(document.getElementById("cps").getContext("2d"),hdg);
   drawGauge(document.getElementById("gge").getContext("2d"),spd);
   
