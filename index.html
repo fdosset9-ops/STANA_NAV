@@ -4204,7 +4204,7 @@ let semrevZoneLayer=null, showZone=true;
 function createSEMREVZone(){
   if(semrevZoneLayer)map.removeLayer(semrevZoneLayer);
   semrevZoneLayer=L.layerGroup();
-  L.polygon(SEMREV_ZONE,{color:'#b30c0c',weight:2,opacity:.3,dashArray:'5,4',fillColor:'#eb2348',fillOpacity:.01,interactive:false}).addTo(semrevZoneLayer);
+  L.polygon(SEMREV_ZONE,{color:'#b30c0c',weight:2,opacity:1,dashArray:'5,4',fillColor:'#eb2348',fillOpacity:.01,interactive:false}).addTo(semrevZoneLayer);
   semrevZoneLayer=semrevZoneLayer.addTo(map);
 }
 function toggleZone(){showZone=!showZone;showZone?semrevZoneLayer.addTo(map):map.removeLayer(semrevZoneLayer);document.getElementById('zone-btn').style.opacity=showZone?'1':'0.35';}
