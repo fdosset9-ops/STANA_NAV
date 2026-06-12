@@ -4198,14 +4198,13 @@ map.on('mousemove',e=>{document.getElementById('u-coord').textContent=fmtCoord(e
 
 // ── SEM-REV ZONE ─────────────────────────────────────────────────────────────
 const SEMREV_ZONE=[
-  [47.259,-2.808],[47.265,-2.776],[47.258,-2.748],[47.238,-2.742],
-  [47.222,-2.757],[47.218,-2.786],[47.228,-2.810],[47.246,-2.816]
+  [47.238993,-2.789684],[47.232325,-2.781327],[47.238993,-2.767984],[47.244993,-2.776335]
 ];
 let semrevZoneLayer=null, showZone=true;
 function createSEMREVZone(){
   if(semrevZoneLayer)map.removeLayer(semrevZoneLayer);
   semrevZoneLayer=L.layerGroup();
-  L.polygon(SEMREV_ZONE,{color:'#02A9C9',weight:2,opacity:.3,dashArray:'5,4',fillColor:'#02A9C9',fillOpacity:.01,interactive:false}).addTo(semrevZoneLayer);
+  L.polygon(SEMREV_ZONE,{color:'#b30c0c',weight:2,opacity:.3,dashArray:'5,4',fillColor:'#eb2348',fillOpacity:.01,interactive:false}).addTo(semrevZoneLayer);
   semrevZoneLayer=semrevZoneLayer.addTo(map);
 }
 function toggleZone(){showZone=!showZone;showZone?semrevZoneLayer.addTo(map):map.removeLayer(semrevZoneLayer);document.getElementById('zone-btn').style.opacity=showZone?'1':'0.35';}
